@@ -42,8 +42,10 @@ module.exports = ({ strapi }) =>  ({
     try {
       const { id } = ctx.params;
       const food = await strapi.service('api::food.food').findOne(id, {
-        populate: 'category',
+        populate: 'category,image',
       });
+      food.instruction = marked.parse(food.instruction);
+      food.ingredients = marked.parse(food.ingredients);
       return food;
     } catch (ex) {
       return ctx.badGateway(ex);
