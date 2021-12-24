@@ -42,6 +42,9 @@ const DEFAULT_PERMISSIONS = [
 
   //search
   { action: 'api::search.search.find', roleType: null },
+
+  //user
+  { action: 'api::user.user.create', roleType: 'public' },
 ];
 
 const transformRoutePrefixFor = pluginName => route => {
