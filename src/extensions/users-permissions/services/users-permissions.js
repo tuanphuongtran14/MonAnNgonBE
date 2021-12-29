@@ -45,6 +45,11 @@ const DEFAULT_PERMISSIONS = [
 
   //user
   { action: 'api::user.user.create', roleType: 'public' },
+  { action: 'api::user.user.getFavorites', roleType: 'authenticated' },
+
+  //favorite
+  { action: 'api::favorite.favorite.create', roleType: 'authenticated' },
+  { action: 'api::favorite.favorite.delete', roleType: 'authenticated' },
 ];
 
 const transformRoutePrefixFor = pluginName => route => {

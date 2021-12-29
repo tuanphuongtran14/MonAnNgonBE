@@ -5,6 +5,7 @@
  */
 
 const axios = require('axios');
+const _ = require('lodash');
 const utils = require('@strapi/utils');
 
 const { sanitize } = utils;
@@ -56,6 +57,24 @@ const sanitizeUser = (user, ctx) => {
         jwt: strapi.service('plugin::users-permissions.jwt').issue({ id: user.id }),
         user: await sanitizeUser(user, ctx),
       });
+    } catch (ex) {
+      return ctx.badGateway(ex);
+    }
+  },
+
+  async getFavorites(ctx) {
+    try {
+      const user = ctx.state.user;
+      //check if food exists
+      const favorites = await strapi.db.query('api::favorite.favorite').findMany({
+        where: { user: user.id },
+        populate: ['food', 'food.category', 'food.image'],
+      });
+      if (_.isEmpty(favorites)) {
+        return [];
+      }
+
+      return favorites.map(({ food }) => food);
     } catch (ex) {
       return ctx.badGateway(ex);
     }

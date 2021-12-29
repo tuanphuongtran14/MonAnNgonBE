@@ -11,5 +11,10 @@
       path: '/users',
       handler: 'user.create',
     },
+    {
+      method: 'GET',
+      path: '/users/favorite',
+      handler: 'user.getFavorites',
+    },
   ]
 }
